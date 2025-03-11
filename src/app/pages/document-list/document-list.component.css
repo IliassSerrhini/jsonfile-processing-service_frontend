@@ -1,0 +1,95 @@
+.document-list-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.table-container {
+  width: 100%;
+  margin-bottom: 20px;
+  overflow: visible; /* Changed from hidden - critical fix */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+table {
+  width: 100%;
+  table-layout: auto; /* Changed from fixed - critical fix */
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+}
+
+.no-data {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+  font-style: italic;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-valid {
+  background-color: #e6f4ea;
+  color: #137333;
+}
+
+.status-invalid {
+  background-color: #fce8e6;
+  color: #c5221f;
+}
+
+/* Add hover effects to rows */
+.mat-row:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Properly space action buttons and prevent wrapping */
+.mat-column-actions {
+  min-width: 200px; /* Ensure enough space */
+  white-space: nowrap;
+}
+
+/* Style header row */
+.mat-header-cell {
+  background-color: #f5f5f5;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Fix truncated contents in cells */
+.mat-cell {
+  padding: 8px 12px;
+}
+
+/* Make text in document ID column overflow with ellipsis */
+.mat-column-documentId {
+  max-width: 260px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Force no wrapping in status column */
+.mat-column-status {
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* Ensure proper spacing in pagination controls */
+.mat-paginator {
+  background-color: transparent;
+}

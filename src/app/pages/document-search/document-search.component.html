@@ -1,0 +1,136 @@
+<div class="search-container">
+  <h2>Document Search</h2>
+
+  <div class="search-form">
+    <div class="main-search-row">
+      <mat-form-field appearance="outline" class="search-input">
+        <mat-label>Search documents</mat-label>
+        <input matInput placeholder="Enter document ID, name or file name" [(ngModel)]="searchQuery">
+        <button *ngIf="searchQuery" matSuffix mat-icon-button aria-label="Clear" (click)="searchQuery=''">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="search()">
+        Search
+      </button>
+
+      <button mat-button color="accent" (click)="showFilters = !showFilters">
+        <mat-icon>{{ showFilters ? 'filter_list_off' : 'filter_list' }}</mat-icon>
+        {{ showFilters ? 'Hide Filters' : 'Show Filters' }}
+      </button>
+    </div>
+
+    <div class="filters-section" *ngIf="showFilters">
+      <div class="filter-row">
+        <!-- Status Filter -->
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select [(ngModel)]="statusFilter">
+            <mat-option value="">All</mat-option>
+            <mat-option value="valid">Valid</mat-option>
+            <mat-option value="invalid">Invalid</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- File Type Filter -->
+        <mat-form-field appearance="outline">
+          <mat-label>File Type</mat-label>
+          <mat-select [(ngModel)]="fileTypeFilter">
+            <mat-option value="">All</mat-option>
+            <mat-option value=".json">JSON</mat-option>
+            <!-- Add more options as needed -->
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="filter-actions">
+        <button mat-button color="warn" (click)="clearFilters()">
+          <mat-icon>clear</mat-icon> Clear Filters
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="loading-spinner" *ngIf="loading">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <div class="search-results" *ngIf="hasSearched">
+    <div class="results-header" *ngIf="searchResults.length > 0">
+      <span>{{ searchResults.length }} result(s) found</span>
+    </div>
+
+    <div class="no-results" *ngIf="hasSearched && searchResults.length === 0 && !loading">
+      No documents found matching your criteria
+    </div>
+
+    <div class="results-table-container" *ngIf="searchResults.length > 0">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
+        <!-- Document ID Column -->
+        <ng-container matColumnDef="documentId">
+          <th mat-header-cell *matHeaderCellDef>Document ID</th>
+          <td mat-cell *matCellDef="let document" [matTooltip]="document.documentId">
+            <span [innerHTML]="highlightMatch(document.documentId)"></span>
+          </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let document">
+            <span [innerHTML]="highlightMatch(document.name || 'Unnamed')"></span>
+          </td>
+        </ng-container>
+
+        <!-- Original File Name Column -->
+        <ng-container matColumnDef="originalFileName">
+          <th mat-header-cell *matHeaderCellDef>Original File</th>
+          <td mat-cell *matCellDef="let document">
+            <span [innerHTML]="highlightMatch(document.originalFileName || 'N/A')"></span>
+          </td>
+        </ng-container>
+
+        <!-- Processed At Column -->
+        <ng-container matColumnDef="processedAt">
+          <th mat-header-cell *matHeaderCellDef>Processed At</th>
+          <td mat-cell *matCellDef="let document">
+            {{document.processedAt ? (document.processedAt | date:'medium') : 'Not processed'}}
+          </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let document">
+            <span class="status-badge" [ngClass]="document.valid ? 'status-valid' : 'status-invalid'">
+              {{document.valid ? 'Valid' : 'Invalid'}}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let document">
+            <button mat-icon-button color="primary" matTooltip="View Details">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button [disabled]="!document.valid" matTooltip="Download" (click)="downloadDocument(document)">
+              <mat-icon>download</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        showFirstLastButtons>
+      </mat-paginator>
+    </div>
+  </div>
+</div>

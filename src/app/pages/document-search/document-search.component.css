@@ -1,0 +1,172 @@
+.search-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h2 {
+  background-color: #4b7faa;
+  color: white;
+  padding: 16px;
+  margin: -20px -20px 20px -20px;
+  border-radius: 4px 4px 0 0;
+  font-weight: 500;
+}
+
+.search-form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+
+.main-search-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 250px;
+}
+
+.filters-section {
+  background-color: #f8f8f8;
+  padding: 16px;
+  border-radius: 4px;
+  margin-top: 16px;
+  border: 1px solid #e0e0e0;
+}
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.filter-row mat-form-field {
+  flex: 1;
+  min-width: 180px;
+}
+
+.filter-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+}
+
+.search-results {
+  margin-top: 20px;
+}
+
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 8px 16px;
+  background-color: #E3F2FD;
+  border-radius: 4px;
+  font-weight: 500;
+  color: #1565C0;
+}
+
+.no-results {
+  text-align: center;
+  padding: 40px;
+  background-color: #fff;
+  border-radius: 4px;
+  margin-top: 16px;
+  color: #666;
+  font-style: italic;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.results-table-container {
+  width: 100%;
+  overflow: visible;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.15);
+  border-radius: 4px;
+}
+
+table {
+  width: 100%;
+  table-layout: auto;
+}
+
+/* Status badges */
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-valid {
+  background-color: #E8F5E9;
+  color: #2E7D32;
+}
+
+.status-invalid {
+  background-color: #FFEBEE;
+  color: #C62828;
+}
+
+/* Highlight search matches */
+.highlight {
+  background-color: rgba(255, 235, 59, 0.4);
+  padding: 2px;
+  border-radius: 2px;
+}
+
+/* Style header row */
+.mat-header-cell {
+  background-color: #E3F2FD;
+  color: #1565C0;
+  font-weight: 500;
+  padding: 12px;
+}
+
+.mat-cell {
+  padding: 8px 12px;
+}
+
+.mat-column-documentId {
+  max-width: 260px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mat-column-status {
+  white-space: nowrap;
+  text-align: center;
+  width: 100px;
+}
+
+.mat-column-actions {
+  min-width: 120px;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .main-search-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+}

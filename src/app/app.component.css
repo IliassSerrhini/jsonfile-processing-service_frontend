@@ -1,0 +1,28 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.content {
+  padding: 20px;
+  flex-grow: 1;
+}
+
+mat-toolbar a {
+  margin-left: 16px;
+  display: flex;
+  align-items: center;
+}
+
+mat-toolbar a mat-icon {
+  margin-right: 5px;
+}
+
+.active {
+  background-color: rgba(255, 255, 255, 0.2);
+}

@@ -1,0 +1,78 @@
+<div class="document-list-container">
+  <h2>Document Management</h2>
+
+  <div class="loading-spinner" *ngIf="loading">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
+      <!-- Document ID Column -->
+      <ng-container matColumnDef="documentId">
+        <th mat-header-cell *matHeaderCellDef>Document ID</th>
+        <td mat-cell *matCellDef="let document" [matTooltip]="document.documentId">
+          {{document.documentId || 'N/A'}}
+        </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let document">{{document.name || 'Unnamed'}}</td>
+      </ng-container>
+
+      <!-- Original File Name Column -->
+      <ng-container matColumnDef="originalFileName">
+        <th mat-header-cell *matHeaderCellDef>Original File</th>
+        <td mat-cell *matCellDef="let document">{{document.originalFileName || 'N/A'}}</td>
+      </ng-container>
+
+      <!-- Processed At Column - FIXED -->
+      <ng-container matColumnDef="processedAt">
+        <th mat-header-cell *matHeaderCellDef>Processed At</th>
+        <td mat-cell *matCellDef="let document">{{document.processedAt ? (document.processedAt | date:'medium') : 'Not processed'}}</td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let document">
+          <span class="status-badge" [ngClass]="document.valid ? 'status-valid' : 'status-invalid'">
+            {{getStatusText(document.valid)}}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let document">
+          <button mat-icon-button color="primary" matTooltip="View Details">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button color="accent" matTooltip="Edit">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" matTooltip="Delete" (click)="deleteDocument(document.id!)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-icon-button [disabled]="!document.valid" matTooltip="Download" (click)="downloadDocument(document)">
+            <mat-icon>download</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <div class="no-data" *ngIf="dataSource.data.length === 0 && !loading">
+      No documents found
+    </div>
+  </div>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    showFirstLastButtons>
+  </mat-paginator>
+</div>
